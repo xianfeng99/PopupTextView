@@ -2,7 +2,6 @@ package com.jikexueyuan.animview;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -23,6 +22,5 @@ public class SampleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawText("极客学院", 0, 200, new Paint());
     }
 }
