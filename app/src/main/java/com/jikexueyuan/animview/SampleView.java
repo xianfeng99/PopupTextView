@@ -14,6 +14,12 @@ import android.view.View;
  */
 public class SampleView extends View {
 
+    private Paint paint = new Paint();
+
+    private LogicThread logicThread;
+    private int x = 0;//文字和图片横坐标
+    private int radius = 50;//圆半径
+
     public SampleView(Context context) {
         super(context);
     }
@@ -22,20 +28,57 @@ public class SampleView extends View {
         super(context, attrs);
     }
 
-    private Paint paint = new Paint();
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if(logicThread == null){
+            logicThread = new LogicThread();
+            logicThread.start();
+        }
+
         paint.setTextSize(50);
         paint.setColor(Color.BLUE);
         //绘制文字
-        canvas.drawText("极客学院", 0, 100, paint);
+        canvas.drawText("极客学院", x, 100, paint);
         //绘制几何图形
-        canvas.drawCircle(50, 150, 50, paint);
+        canvas.drawCircle(50, 150, radius, paint);
         //绘制图片
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        canvas.drawBitmap(bitmap, 0, 200, paint);
+        canvas.drawBitmap(bitmap, x, 200, paint);
+    }
+
+    class LogicThread extends Thread{
+        @Override
+        public void run() {
+
+            while(true){
+
+                modifyTextAndBitmap();
+                modifyCircle();
+                try {
+                    Thread.sleep(30);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //更新绘制，会调用onDraw方法
+                postInvalidate();
+            }
+
+        }
+    };
+
+    private void modifyTextAndBitmap(){
+        x += 2;
+        if (x > getWidth()){
+            x = 0;
+        }
+    }
+    private void modifyCircle(){
+        radius --;
+        if(radius <= 0){
+            radius = 50;
+        }
     }
 
 }
