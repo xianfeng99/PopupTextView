@@ -15,7 +15,6 @@ import android.view.View;
 public class SampleView extends BaseView {
 
     private Paint paint = new Paint();
-
     private int x = 0;//文字和图片横坐标
     private int radius = 50;//圆半径
 
@@ -28,10 +27,14 @@ public class SampleView extends BaseView {
     }
 
     @Override
-    protected void drawSub(Canvas canvas) {
-
+    protected void init() {
         paint.setTextSize(50);
         paint.setColor(Color.BLUE);
+    }
+
+    @Override
+    protected void drawSub(Canvas canvas) {
+
         //绘制文字
         canvas.drawText("极客学院", x, 100, paint);
         //绘制几何图形
