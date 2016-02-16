@@ -12,11 +12,10 @@ import android.view.View;
 /**
  * Created by lixianfeng on 16/2/16.
  */
-public class SampleView extends View {
+public class SampleView extends BaseView {
 
     private Paint paint = new Paint();
 
-    private LogicThread logicThread;
     private int x = 0;//文字和图片横坐标
     private int radius = 50;//圆半径
 
@@ -29,13 +28,7 @@ public class SampleView extends View {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        if(logicThread == null){
-            logicThread = new LogicThread();
-            logicThread.start();
-        }
+    protected void drawSub(Canvas canvas) {
 
         paint.setTextSize(50);
         paint.setColor(Color.BLUE);
@@ -48,25 +41,12 @@ public class SampleView extends View {
         canvas.drawBitmap(bitmap, x, 200, paint);
     }
 
-    class LogicThread extends Thread{
-        @Override
-        public void run() {
+    @Override
+    protected void logic() {
+        modifyTextAndBitmap();
+        modifyCircle();
+    }
 
-            while(true){
-
-                modifyTextAndBitmap();
-                modifyCircle();
-                try {
-                    Thread.sleep(30);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                //更新绘制，会调用onDraw方法
-                postInvalidate();
-            }
-
-        }
-    };
 
     private void modifyTextAndBitmap(){
         x += 2;
