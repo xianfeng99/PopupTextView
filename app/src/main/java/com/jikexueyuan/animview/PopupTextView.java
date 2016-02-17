@@ -1,6 +1,7 @@
 package com.jikexueyuan.animview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 
@@ -13,11 +14,17 @@ public class PopupTextView extends BaseView {
 
 //    private PopText popText;
     private ArrayList<PopText> elements = new ArrayList<>();
-    private int size = 8;
+    private int size;
 
 
     public PopupTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.PopupTextView);
+
+        size = ta.getInteger(R.styleable.PopupTextView_txtNumber, 8);
+
+        ta.recycle();
     }
 
     public PopupTextView(Context context) {
