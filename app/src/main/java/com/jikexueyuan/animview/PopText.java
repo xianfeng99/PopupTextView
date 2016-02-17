@@ -18,9 +18,15 @@ public class PopText {
     private int x;
     private int y;
     private int speed;
-    private int width = 500;
+    private int boundWidth = 500;
 
     public PopText(){
+        init();
+    }
+
+    public PopText(int y, int boundWidth){
+        this.y = y;
+        this.boundWidth = boundWidth;
         init();
     }
 
@@ -30,16 +36,16 @@ public class PopText {
 
     public void move(){
         x -= speed;
-        if(x < 0){//可以改进为文字出屏幕paint.measureText(text)
+        if(x < -paint.measureText(text)){//可以改进为文字出屏幕paint.measureText(text)
             init();
         }
     }
 
     private void init(){
 
-        x = width;
-        y = 50;
-        speed = 3 + random.nextInt(10);
+        x = boundWidth;
+//        y = 50;
+        speed = 3 + random.nextInt(15);
         //获取随即评论
         int len = 2 + random.nextInt(10);
         text = "";
@@ -53,7 +59,7 @@ public class PopText {
         int g = random.nextInt(256);
         int b = random.nextInt(256);
         paint.setARGB(a, r, g, b);
-        paint.setTextSize(30);
+        paint.setTextSize(50);
     }
 
     private String getGB2312Str() {
